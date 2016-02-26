@@ -1,0 +1,21 @@
+PKG_CPPFLAGS=-Igawk
+PKG_CFLAGS=-DHAVE_CONFIG_H -DGAWK -DDEFPATH='"."' -DDEFLIBPATH='"gawk"' -DSHLIBEXT='"so"'
+
+LIBGAWK=gawk/array.o gawk/awkgram.o gawk/builtin.o gawk/cint_array.o gawk/command.o gawk/debug.o \
+	gawk/dfa.o gawk/eval.o gawk/ext.o gawk/field.o gawk/floatcomp.o gawk/gawkapi.o gawk/gawkmisc.o \
+	gawk/getopt.o gawk/getopt1.o gawk/int_array.o gawk/io.o gawk/version.o gawk/mpfr.o gawk/msg.o \
+	gawk/node.o gawk/profile.o gawk/random.o gawk/re.o gawk/regex.o gawk/replace.o gawk/str_array.o \
+	gawk/symbol.o
+
+all: awk
+
+libgawk.a: $(LIBGAWK)
+	$(AR) rcs libgawk.a $(LIBGAWK)
+
+awk: libgawk.a gawk/main.o
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o awk gawk/main.o -L. -lgawk -lreadline
+	mkdir -p ../inst/bin
+	cp -f awk ../inst/bin
+
+clean:
+	rm -f awk *.a *.so gawk/*.o
