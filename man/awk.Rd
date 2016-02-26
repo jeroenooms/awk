@@ -2,9 +2,12 @@
 % Please edit documentation in R/awk.R
 \name{awk}
 \alias{awk}
+\alias{awk_version}
 \title{Wrapper for awk}
 \usage{
 awk(program, file, options = "")
+
+awk_version()
 }
 \description{
 Simple wrapper for awk command line utility.
